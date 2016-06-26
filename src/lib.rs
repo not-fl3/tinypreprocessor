@@ -3,7 +3,6 @@ extern crate regex;
 use regex::*;
 
 pub fn preprocess<F : Fn(&str) -> String>(text : &str, resolver : F) -> String {
-
     let re = Regex::new("(?m)^\\s*\\#include\\s+[\"<]([^\">]+)*[\">]").unwrap();
 
     re.replace_all(text, |capture : &Captures| resolver(capture.at(1).unwrap()))
