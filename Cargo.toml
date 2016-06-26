@@ -1,0 +1,6 @@
+[package]
+name = "tinypreprocessor"
+version = "0.0.1"
+
+[dependencies]
+regex = "0.1"
