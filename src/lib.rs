@@ -2,13 +2,11 @@ extern crate regex;
 
 use regex::*;
 
-fn preprocess_wrapper<F : FnMut(&Captures) -> String>(text : &str, resolver : F) -> String {
+pub fn preprocess<F : Fn(&str) -> String>(text : &str, resolver : F) -> String {
+
     let re = Regex::new("(?m)^\\s*\\#include\\s+[\"<]([^\">]+)*[\">]").unwrap();
 
-    re.replace_all(text, resolver)
-}
-pub fn preprocess<F : Fn(&str) -> String>(text : &str, resolver : F) -> String {
-    preprocess_wrapper(text, |capture| resolver(capture.at(1).unwrap()))
+    re.replace_all(text, |capture : &Captures| resolver(capture.at(1).unwrap()))
 }
 
 
